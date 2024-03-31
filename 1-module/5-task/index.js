@@ -7,3 +7,4 @@ function truncate(str, maxlength) {
     return str;
   }
 }
+alert (truncate())

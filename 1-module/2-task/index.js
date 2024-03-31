@@ -12,8 +12,7 @@ function print(text) {
 function isValid(userName) {
   if (userName !== null && userName.length >= 4 && !userName.includes(" ")) {
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 }
