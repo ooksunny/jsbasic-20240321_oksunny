@@ -6,6 +6,5 @@ function factorial(n) {
   return result;
 }
 
-alert(factorial())
 
 
