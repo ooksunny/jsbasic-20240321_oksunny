@@ -4,4 +4,3 @@ for(let key in obj) {
 }
 return true;
 }
-console.log(isEmpty())
