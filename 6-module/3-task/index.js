@@ -1,18 +1,16 @@
 import createElement from '../../assets/lib/create-element.js';
 //import {initCarousel} from '../../5-module/3-task/index.js';
 
-
-
 export default class Carousel {
   constructor(slides) {
     this.slides = slides;
-    this.elem = this.render();
+    this.render();
     this.addEventListeners();
     this.initCarousel();
   }
 
   render() {
-    let slides = createElement (`
+    this.elem = createElement (`
     <div class="carousel">
     <div class="carousel__arrow carousel__arrow_right">
     <img src="/assets/images/icons/angle-icon.svg" alt="icon">
@@ -20,9 +18,15 @@ export default class Carousel {
   <div class="carousel__arrow carousel__arrow_left">
     <img src="/assets/images/icons/angle-left-icon.svg" alt="icon">
   </div>
-    <div class="carousel__inner">
-    ${this.slides.map(slide =>  `
-  <div class="carousel__inner">
+  </div>
+    `);
+
+    this.slider = createElement(`<div class="carousel__inner"></div>`);
+    this.elem.append(this.slider);
+
+    this.slides.forEach((slide) => {
+    this.slider.append(
+    createElement (`
     <div class="carousel__slide" data-id="${slide.id}">
   <img src="/assets/images/carousel/${slide.image}" class="carousel__img" alt="slide">
   <div class="carousel__caption">
@@ -33,49 +37,41 @@ export default class Carousel {
     </button>
   </div>
 </div>
-`).join('')}
-</div>
-</div>
-    `
-  )
-    return slides;
-    
-    
+    `)
+);  
+});
   }
-  addEventListeners() {
-    this.elem.addEventListener('click', event => {
-      if (event.target.closest('.carousel__button')) {
-        let slideId = event.target.closest('.carousel__slide').dataset.id;
-        this.elem.dispatchEvent(new CustomEvent("product-add", {
-            detail: slideId,
-            bubbles: true
-        }));
+
+    initCarousel () {
+      let carousel = this.elem;
+      let currentSlide = 0;
+      let carouselImgCount = carousel.querySelectorAll(".carousel__slide").length;
+
+
+  let arrowLeft = carousel.querySelector('.carousel__arrow_left');
+  let arrowRight = carousel.querySelector('.carousel__arrow_right');
+  let inner = carousel.querySelector('.carousel__inner');
+
+  flipping();
+
+  carousel.addEventListener("click", function (event) {
+    if (event.target.closest('.carousel__arrow_right')) {
+      currentSlide++;
+    flipping();
+    } else if (event.target.closest('.carousel__arrow_left')) {
+      currentSlide--;
+      flipping();
     }
-    })
-    document.addEventListener("DOMContentLoaded", () => {
-     function initCarousel () {
-        const slider = document.querySelector('.carousel__inner');
-        const arrowLeft = document.querySelector('.carousel__arrow_left');
-        const arrowRight = document.querySelector('.carousel__arrow_right');
-        const slideWidth = slider.offsetWidth;
-        let currentSlide = 0;
-      
-        if (currentSlide === 0) {
-          arrowLeft.style.display = 'none';
-        }
-      
-        function goToSlide(index) {
-          if (index < 0 || index >= slider.children.length){
-            return
-          }
-          currentSlide = index;
-          slider.style.transform = `translateX(${-index * slideWidth}px)`;
-      
-          if (currentSlide === 0) {
+      });
+  
+function flipping() {
+  let offset = inner.offsetWidth;
+
+         if (currentSlide == 0) {
             arrowLeft.style.display = 'none';
             arrowRight.style.display = '';
           }
-          else if (currentSlide === slider.children.length - 1){
+          else if (currentSlide == carouselImgCount - 1){
             arrowLeft.style.display = '';
             arrowRight.style.display = 'none';
           }
@@ -84,18 +80,22 @@ export default class Carousel {
             arrowRight.style.display = '';
           }
       
+
+        inner.style.transform = `translateX(-${offset * currentSlide}px)`;
       
         }
       
-        arrowLeft.addEventListener('click', () => {
-       goToSlide(currentSlide-1);
-        });
-      
-        arrowRight.addEventListener('click', () => {
-       goToSlide(currentSlide + 1);
-        });
       }
-    });
-  }
  
-}
+      addEventListeners() {
+        this.elem.addEventListener('click', event => {
+          if (event.target.closest('.carousel__button')) {
+            let id = event.target.closest('.carousel__slide').dataset.id;
+            this.elem.dispatchEvent(new CustomEvent("product-add", {
+                detail: id,
+                bubbles: true
+            }));
+        }
+        })
+      }
+    }

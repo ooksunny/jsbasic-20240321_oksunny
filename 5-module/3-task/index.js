@@ -1,9 +1,12 @@
-export function initCarousel () {
+function initCarousel() {
+  // ваш код...
   const slider = document.querySelector('.carousel__inner');
   const arrowLeft = document.querySelector('.carousel__arrow_left');
   const arrowRight = document.querySelector('.carousel__arrow_right');
-  const slideWidth = slider.offsetWidth;
+  const slideWidth = slider.firstElementChild.offsetWidth;
   let currentSlide = 0;
+
+  console.log(slideWidth)
 
   if (currentSlide === 0) {
     arrowLeft.style.display = 'none';
@@ -19,15 +22,15 @@ export function initCarousel () {
     if (currentSlide === 0) {
       arrowLeft.style.display = 'none';
       arrowRight.style.display = '';
-    }
+    } 
     else if (currentSlide === slider.children.length - 1){
       arrowLeft.style.display = '';
       arrowRight.style.display = 'none';
-    }
+    } 
     else {
       arrowLeft.style.display = '';
       arrowRight.style.display = '';
-    }
+    } 
 
 
   }
