@@ -6,7 +6,7 @@ function initCarousel() {
   let currentSlide = 0;
 
   console.log(slideWidth)
-  
+
   if (currentSlide === 0) {
     arrowLeft.style.display = 'none';
   }
@@ -21,15 +21,15 @@ function initCarousel() {
     if (currentSlide === 0) {
       arrowLeft.style.display = 'none';
       arrowRight.style.display = '';
-    } 
+    }
     else if (currentSlide === slider.children.length - 1){
       arrowLeft.style.display = '';
       arrowRight.style.display = 'none';
-    } 
+    }
     else {
       arrowLeft.style.display = '';
       arrowRight.style.display = '';
-    } 
+    }
 
 
   }
@@ -42,4 +42,3 @@ function initCarousel() {
  goToSlide(currentSlide + 1);
   });
 }
-initCarousel();
