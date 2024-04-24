@@ -1,4 +1,4 @@
-function initCarousel() {
+export function initCarousel () {
   const slider = document.querySelector('.carousel__inner');
   const arrowLeft = document.querySelector('.carousel__arrow_left');
   const arrowRight = document.querySelector('.carousel__arrow_right');
@@ -40,4 +40,3 @@ function initCarousel() {
  goToSlide(currentSlide + 1);
   });
 }
-initCarousel();
